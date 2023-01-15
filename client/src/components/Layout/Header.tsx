@@ -39,19 +39,19 @@ function Component() {
         />
 
         <div>
-          <Tooltip tips="Feedback" position="bottom">
-            <Iconfont
-              name="yijianfankui"
-              size={26}
-              className={classNames('w-7 mr-3')}
-              onClick={() => {
-                window.open(
-                  'https://github.com/turboyjs/runcode/issues/new',
-                  '_blank'
-                );
-              }}
-            />
-          </Tooltip>
+          {/*<Tooltip tips="Feedback" position="bottom">*/}
+          {/*  <Iconfont*/}
+          {/*    name="yijianfankui"*/}
+          {/*    size={26}*/}
+          {/*    className={classNames('w-7 mr-3')}*/}
+          {/*    onClick={() => {*/}
+          {/*      window.open(*/}
+          {/*        'https://github.com/turboyjs/runcode/issues/new',*/}
+          {/*        '_blank'*/}
+          {/*      );*/}
+          {/*    }}*/}
+          {/*  />*/}
+          {/*</Tooltip>*/}
           <Tooltip tips="Github" position="bottom">
             <Iconfont
               name="github"
