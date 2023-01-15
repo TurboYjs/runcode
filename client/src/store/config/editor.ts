@@ -13,7 +13,7 @@ export const enum ThemeType {
 export class EditorConfig {
   autoSaveDelay = 1;
   editorThemeType = ThemeType['Visual Studio'];
-  codeType = CodeType.cpp;
+  codeType = CodeType.typescript;
   outputType = OutputType.plain;
   constructor() {
     makeObservable(this, {

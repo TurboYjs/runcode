@@ -1,6 +1,7 @@
 export enum CodeType {
   cpp = 'cpp',
   nodejs = 'nodejs',
+  typescript = 'typescript',
   go = 'go',
   python3 = 'python3',
   java = 'java',
@@ -11,20 +12,22 @@ export enum CodeType {
 }
 
 export enum CodeEnv {
-  cpp = 'cpp:11',
-  nodejs = 'nodejs:lts',
-  go = 'go:latest',
-  python3 = 'python:3',
-  java = 'java:latest',
-  php = 'php:8',
-  rust = 'rust:latest',
-  c = 'cpp:11',
-  dotnet = 'mono:lts',
+  cpp = 'cpp:runcode',
+  nodejs = 'nodejs:runcode',
+  typescript = 'nodejs:runcode',
+  go = 'go:runcode',
+  python3 = 'python3:runcode',
+  java = 'java:runcode',
+  php = 'php:runcode',
+  rust = 'rust:runcode',
+  c = 'cpp:runcode',
+  dotnet = 'dotnet:runcode',
 }
 
 export enum FileSuffix {
   cpp = 'cpp',
   nodejs = 'js',
+  typescript = 'ts',
   go = 'go',
   python3 = 'py',
   java = 'java',

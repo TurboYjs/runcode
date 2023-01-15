@@ -1,6 +1,7 @@
 export enum CodeType {
   cpp = 'cpp',
   nodejs = 'nodejs',
+  typescript = 'typescript',
   go = 'go',
   python3 = 'python3',
   java = 'java',

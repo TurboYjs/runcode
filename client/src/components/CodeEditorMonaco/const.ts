@@ -10,6 +10,7 @@ int main() {
 `,
 
   [CodeType.nodejs]: `console.log('hello world')`,
+  [CodeType.typescript]: `console.log('hello world')`,
   [CodeType.go]: `package main
 
 import "fmt"

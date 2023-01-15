@@ -25,7 +25,7 @@ instance.interceptors.response.use(
     const { code, data, message } = response.data;
 
     if (code) {
-      toast({ message, type: 'error' });
+      toast({ message: JSON.stringify(message), type: 'error' });
       throw new Error();
     }
 

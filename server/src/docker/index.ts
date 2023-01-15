@@ -45,6 +45,12 @@ const imageMap: Record<CodeType, CodeDockerOption> = {
     shellWithStdin: 'node code.js < input.txt',
     fileSuffix: FileSuffix.nodejs,
   },
+  [CodeType.typescript]: {
+    env: CodeEnv.nodejs,
+    shell: './node_modules/.bin/ts-node code.ts',
+    shellWithStdin: './node_modules/.bin/ts-node code.ts < input.txt',
+    fileSuffix: FileSuffix.typescript,
+  },
   go: {
     env: CodeEnv.go,
     shell: 'go run code.go',

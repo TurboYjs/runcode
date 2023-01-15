@@ -1,16 +1,14 @@
 #!/usr/bin/env zx
 const path = require('path');
+const fg = require('fast-glob');
 
 const root = path.resolve('.');
 
-const dockerPath = 'src/docker';
-
-const nodejs = path.join(root, dockerPath, 'nodejs');
-
-cd(nodejs);
-await $`docker build -t nodejs:lts .`;
-
-cd(root);
-await $`docker build -t cpp:11 .`;
-
-// await $`docker build -t go:latest ../src/docker/go`;
+const stream = fg.stream(['src/docker/**/Dockerfile'], { dot: true });
+const ignoreLanguages = ['scala']
+for await (const entry of stream) {
+    cd(path.join(root, entry.replace(/\/Dockerfile/, '')))
+    const name = entry.replace(/src\/docker\//, '').replace(/\/Dockerfile/, '')
+    if (ignoreLanguages.includes(name)) continue
+    await $`docker build -t ${name}:runcode .`
+}

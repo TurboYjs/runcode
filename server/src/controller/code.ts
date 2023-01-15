@@ -47,7 +47,7 @@ export class CodeController {
     } catch (error) {
       result = {
         code: 1,
-        message: JSON.stringify(error),
+        message: error,
       };
     }
     return result;
