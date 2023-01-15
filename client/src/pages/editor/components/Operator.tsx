@@ -215,7 +215,7 @@ function Operator(props: Props) {
             ]}
             onChange={handleTerminalChange}
           >
-            <Button className="mr-2">终端样式</Button>
+            <Button className="mr-2">STYLE</Button>
           </Dropdown>
         )}
 
@@ -269,8 +269,8 @@ function Operator(props: Props) {
       <div className={classnames(styles.display)}>
         <Tabs<DisplayType>
           tabs={[
-            { label: '输入', value: DisplayType.input },
-            { label: '输出', value: DisplayType.output },
+            { label: 'Input', value: DisplayType.input },
+            { label: 'Output', value: DisplayType.output },
           ]}
           active={display}
           lifted

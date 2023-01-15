@@ -28,9 +28,9 @@ function Component() {
         <Menu
           value={pathname}
           options={[
-            { label: '前端编程题', value: RouterPath.questions },
-            { label: '编辑器', value: RouterPath.editor },
-            { label: '访问数据', value: RouterPath.stat },
+            { label: 'Questions', value: RouterPath.questions },
+            { label: 'Editor', value: RouterPath.editor },
+            { label: 'Statics', value: RouterPath.stat },
           ]}
           onClick={(pathname) => {
             router.navigate(pathname);
@@ -39,31 +39,31 @@ function Component() {
         />
 
         <div>
-          <Tooltip tips="意见反馈" position="bottom">
+          <Tooltip tips="Feedback" position="bottom">
             <Iconfont
               name="yijianfankui"
               size={26}
               className={classNames('w-7 mr-3')}
               onClick={() => {
                 window.open(
-                  'https://github.com/xjq7/runcode/issues/new',
+                  'https://github.com/turboyjs/runcode/issues/new',
                   '_blank'
                 );
               }}
             />
           </Tooltip>
-          <Tooltip tips="Github 开源地址" position="bottom">
+          <Tooltip tips="Github" position="bottom">
             <Iconfont
               name="github"
               size={24}
               className={classNames('w-7 mr-3')}
               onClick={() => {
-                window.open('https://github.com/xjq7/runcode', '_blank');
+                window.open('https://github.com/turboyjs/runcode', '_blank');
               }}
             />
           </Tooltip>
 
-          <Tooltip tips="设置" position="bottom">
+          <Tooltip tips="Settings" position="bottom">
             <label htmlFor={settingDrawerId}>
               <Iconfont
                 name="setting"

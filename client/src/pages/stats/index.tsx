@@ -130,7 +130,7 @@ function Component() {
     view1.axis('date', {});
     view1.axis('value', {
       title: {
-        text: '用户量',
+        text: 'UA',
       },
     });
     view1.line().position('date*value');
@@ -309,37 +309,35 @@ function Component() {
           <div className="stat w-36">
             <div className="stat-title">PV</div>
             <div className="stat-value">{stats.stats.pv}</div>
-            <div className="stat-desc">今日访问量</div>
           </div>
         </div>
         <div className="stats shadow ml-5">
           <div className="stat w-36">
             <div className="stat-title">UV</div>
             <div className="stat-value">{stats.stats.uv}</div>
-            <div className="stat-desc">今日用户量</div>
           </div>
         </div>
       </div>
       <div className={styles.chart}>
         <div className="w-1/2">
-          <div className="mb-3">访问设备统计</div>
+          <div className="mb-3">UA</div>
           <div id="os-stats"></div>
         </div>
 
         <div className="w-1/2">
-          <div className="mb-3">近三天用户访问统计</div>
+          <div className="mb-3">PV nearly three days</div>
           <div id="uv-stats"></div>
         </div>
       </div>
       <div className={styles.chart}>
         <div className="w-1/2">
-          <div className="mb-3">区域访问统计</div>
+          <div className="mb-3">RA</div>
           <Select<RegionType>
             size="sm"
             options={[
-              { label: '国家', value: RegionType.country },
-              { label: '省份', value: RegionType.province },
-              { label: '城市', value: RegionType.city },
+              { label: 'Country', value: RegionType.country },
+              { label: 'Province', value: RegionType.province },
+              { label: 'City', value: RegionType.city },
             ]}
             value={regionType}
             onChange={(e) => {
@@ -349,13 +347,13 @@ function Component() {
           <div id="region-stats"></div>
         </div>
         <div className="w-1/2">
-          <div className="mb-3">今日访问用户来源统计</div>
+          <div className="mb-3">Channels today</div>
           <div id="channel-stats"></div>
         </div>
       </div>
       <div className={styles.chart}>
         <div className="w-1/2">
-          <div className="mb-3">今日未知渠道 referrer 统计</div>
+          <div className="mb-3">Unknown channels referrer </div>
           <div id="source-stats"></div>
         </div>
 

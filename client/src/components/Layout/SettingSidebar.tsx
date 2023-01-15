@@ -15,7 +15,7 @@ export function Component() {
   return (
     <>
       <div className="navbar bg-base-100">
-        <a className="btn btn-ghost normal-case text-xl">设置</a>
+        <a className="btn btn-ghost normal-case text-xl">Settings</a>
       </div>
       <RangeSlider
         min={1}
@@ -23,7 +23,7 @@ export function Component() {
         value={autoSaveDelay}
         onChange={handleDelayChange}
       />
-      <li className="p-2">代码变更 {autoSaveDelay}s 后自动保存</li>
+      <li className="p-2">Code will be saved after {autoSaveDelay}s</li>
     </>
   );
 }

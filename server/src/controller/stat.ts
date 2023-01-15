@@ -52,10 +52,10 @@ export class StatController {
 
       const parseList = uniqList.map((o) => {
         const ua = uaparser(o.userAgent ?? '');
-        const browser = ua?.browser?.name ?? '未知';
-        const os = ua?.os?.name ?? '未知';
-        const device = ua?.device?.model ?? '未知';
-        const engine = ua?.engine?.name ?? '未知';
+        const browser = ua?.browser?.name ?? 'Unknown';
+        const os = ua?.os?.name ?? 'Unknown';
+        const device = ua?.device?.model ?? 'Unknown';
+        const engine = ua?.engine?.name ?? 'Unknown';
         return { ...o, browser, os, device, engine };
       }) as StatRes[];
 
@@ -84,7 +84,7 @@ export class StatController {
 
             [country, province, city].forEach((value, index) => {
               const idx = index + 1;
-              if (!value) value = '未知';
+              if (!value) value = 'Unknown';
               if (!acc[idx][value]) {
                 acc[idx][value] = 1;
               } else {
@@ -102,7 +102,7 @@ export class StatController {
             } catch (error) {}
 
             if (channel === 0 && hostname) {
-              channelStat['未知渠道'] = (channelStat['未知渠道'] || 0) + 1;
+              channelStat['Unknown channels'] = (channelStat['Unknown channels'] || 0) + 1;
               sourceStat[hostname] = (sourceStat[hostname] || 0) + 1;
             } else if (curCount) {
               channelStat[ChannelText[channel as Channel]]++;
