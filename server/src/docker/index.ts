@@ -4,6 +4,7 @@ import dockerConfig from '../config/docker';
 import { CodeEnv, CodeType, FileSuffix } from '../utils/type';
 import { isType } from '../utils/helper';
 import logger from '../logger';
+import {upperFirst} from "lodash";
 
 export enum RunCodeStatus {
   success = 0,
@@ -28,7 +29,7 @@ interface CodeDockerOption {
   env: CodeEnv;
   shell: string;
   fileSuffix: FileSuffix;
-  shellWithStdin: string;
+  shellWithStdin?: string;
   prefix?: string;
 }
 
@@ -36,31 +37,26 @@ const imageMap: Record<CodeType, CodeDockerOption> = {
   cpp: {
     env: CodeEnv.cpp,
     shell: 'g++ code.cpp -o code.out && ./code.out',
-    shellWithStdin: 'g++ code.cpp -o code.out && ./code.out < input.txt',
     fileSuffix: FileSuffix.cpp,
   },
   nodejs: {
     env: CodeEnv.nodejs,
     shell: 'node code.js',
-    shellWithStdin: 'node code.js < input.txt',
     fileSuffix: FileSuffix.nodejs,
   },
-  [CodeType.typescript]: {
+  typescript: {
     env: CodeEnv.nodejs,
     shell: './node_modules/.bin/ts-node code.ts',
-    shellWithStdin: './node_modules/.bin/ts-node code.ts < input.txt',
     fileSuffix: FileSuffix.typescript,
   },
   go: {
     env: CodeEnv.go,
     shell: 'go run code.go',
-    shellWithStdin: 'go run code.go < input.txt',
     fileSuffix: FileSuffix.go,
   },
   python3: {
     env: CodeEnv.python3,
     shell: 'python3 code.py',
-    shellWithStdin: 'python3 code.py input.txt',
     fileSuffix: FileSuffix.python3,
     prefix: `def expand_arg_files():
     import sys
@@ -81,31 +77,26 @@ expand_arg_files()
   java: {
     env: CodeEnv.java,
     shell: 'javac Code.java && java Code',
-    shellWithStdin: 'javac Code.java && java Code < input.txt',
     fileSuffix: FileSuffix.java,
   },
   php: {
     env: CodeEnv.php,
     shell: 'php code.php',
-    shellWithStdin: 'php code.php < input.txt',
     fileSuffix: FileSuffix.php,
   },
   rust: {
     env: CodeEnv.rust,
     shell: 'rustc code.rs && ./code',
-    shellWithStdin: 'rustc code.rs && ./code < input.txt',
     fileSuffix: FileSuffix.rust,
   },
   c: {
     env: CodeEnv.c,
     shell: 'g++ code.c -o code.out && ./code.out',
-    shellWithStdin: 'g++ code.c -o code.out && ./code.out < input.txt',
     fileSuffix: FileSuffix.c,
   },
   dotnet: {
     env: CodeEnv.dotnet,
     shell: 'mcs -out:code.exe code.cs && mono code.exe',
-    shellWithStdin: 'mcs -out:code.exe code.cs && mono code.exe < input.txt',
     fileSuffix: FileSuffix.dotnet,
   },
 };
@@ -130,25 +121,26 @@ export async function run2(params: {
 
   if (!dockerOptions) return Error;
 
-  const { env, prefix = '', shell, shellWithStdin, fileSuffix } = dockerOptions;
+  const { env, prefix = '', shell, fileSuffix } = dockerOptions;
 
   let removeContainer = () => {};
 
-  const wrapCode = '\n' + prefix + decodeURI(code) + '\n' + 'EOF' + '\n';
-  const wrapStdin = '\n' + decodeURI(stdin || '') + '\n' + 'EOF' + '\n';
-
-  let bashCmd = `cat > code.${fileSuffix} << 'EOF' ${wrapCode}`;
+  // const wrapCode = '\n' + prefix + decodeURI(code) + '\n' + 'EOF' + '\n';
+  const wrapCode = `\n${prefix}${decodeURI(code)} \nEOF\n`
+  // const wrapStdin = '\n' + decodeURI(stdin || '') + '\n' + 'EOF' + '\n';
+  const wrapStdin = `\n${prefix}${decodeURI(stdin||'')} \nEOF\n`
+  let codeFile = `code.${fileSuffix}`
+  let bashCmd = `cat > ${codeFile} << 'EOF' ${wrapCode}`;
 
   if (type === CodeType.java) {
-    bashCmd = `cat > Code.${fileSuffix} << 'EOF' ${wrapCode}`;
+    codeFile = upperFirst(codeFile)
+    bashCmd = `cat > ${codeFile} << 'EOF' ${wrapCode}`;
   }
 
   if (stdin) {
-    bashCmd += `cat > input.txt << EOF ${wrapStdin}
-    ${shellWithStdin}`;
-  } else {
-    bashCmd += `${shell}`;
+    bashCmd += `cat > input.txt << EOF ${wrapStdin}\ncat *.txt >> ${codeFile}\n`
   }
+  bashCmd += `${shell}`;
 
   return await new Promise((resolve, reject) => {
     docker.createContainer(
